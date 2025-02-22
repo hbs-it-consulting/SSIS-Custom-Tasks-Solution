@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.DataTransformationServices.Controls\v4.0_15.0.0.0__89845dcd8080cc91\Microsoft.DataTransformationServices.Controls.DLL</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.Dts.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\SSIS\NewCustomTasksSolution\CustomTasksSolution\LogVariableTaskUI\bin\Debug\Microsoft.SqlServer.Dts.Design.dll</HintPath>
@@ -38,6 +42,7 @@
     <Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,8 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneralView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="LogVariableTaskUI.cs" />
+    <Compile Include="LogVariableTaskUIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogVariableTask\LogVariableTask.csproj">
+      <Project>{c1c5ada1-17ac-4906-a140-bd2eefe1a6f0}</Project>
+      <Name>LogVariableTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

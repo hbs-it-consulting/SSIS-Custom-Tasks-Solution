@@ -10,24 +10,28 @@ namespace LogVariableTaskUI
 {
     public class LogVariableTaskUI : IDtsTaskUI
     {
+        private TaskHost taskHost = null;
+        private IDtsConnectionService connectionService = null;
+
         public void Delete(System.Windows.Forms.IWin32Window parentWindow)
         {
-            throw new NotImplementedException();
+            
         }
 
         public System.Windows.Forms.ContainerControl GetView()
         {
-            throw new NotImplementedException();
+            return new LogVariableTaskUIForm(taskHost, connectionService);
         }
 
         public void Initialize(TaskHost taskHost, IServiceProvider serviceProvider)
         {
-            throw new NotImplementedException();
+            this.taskHost = taskHost;
+            this.connectionService = serviceProvider.GetService(typeof(IDtsConnectionService)) as IDtsConnectionService;
         }
 
         public void New(System.Windows.Forms.IWin32Window parentWindow)
         {
-            throw new NotImplementedException();
+             
         }
     }
 }
