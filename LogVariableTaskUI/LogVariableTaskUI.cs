@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//5f4e01d31643cbb4 public key
 namespace LogVariableTaskUI
 {
     public class LogVariableTaskUI : IDtsTaskUI

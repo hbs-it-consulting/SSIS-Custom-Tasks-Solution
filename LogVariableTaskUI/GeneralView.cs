@@ -59,12 +59,12 @@ namespace LogVariableTaskUI
         {
             if (taskHost == null)
             {
-                throw new ArgumentNullException("Attempting to initialize the ExecuteCatalogPackageTask UI with a null TaskHost.");
+                throw new ArgumentNullException("Attempting to initialize the LogVariableTask UI with a null TaskHost.");
             }
 
             if (!(((TaskHost)taskHost).InnerObject is LogVariableTask.LogVariableTask))
             {
-                throw new ArgumentException("Attempting to initialize the ExecuteCatalogPackageTask UI with a task that is not an ExecuteCatalogPackageTask.");
+                throw new ArgumentException("Attempting to initialize the LogVariableTask UI with a task that is not an LogVariableTask.");
             }
 
             theTask = ((TaskHost)taskHost).InnerObject as LogVariableTask.LogVariableTask;
@@ -74,6 +74,7 @@ namespace LogVariableTaskUI
             generalPropertyGrid.SelectedObject = this.generalNode;
 
             generalNode.Name = ((TaskHost)taskHost).Name;
+            generalNode.Description = ((TaskHost)taskHost).Description;
         }
 
         public void OnValidate(ref bool bViewIsValid, ref string reason)
