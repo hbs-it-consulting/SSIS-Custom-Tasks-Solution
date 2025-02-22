@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogVariableTask
 {
-    public class LogVariableTask
+    public class LogVariableTask : Microsoft.SqlServer.Dts.Runtime.Task
     {
     }
 }
