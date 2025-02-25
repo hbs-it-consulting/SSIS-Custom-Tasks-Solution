@@ -4,6 +4,9 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using LogVariableTask;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LogVariableTaskUI
 {
@@ -13,9 +16,14 @@ namespace LogVariableTaskUI
         private TableLayoutPanel addremovebuttonTableLayoutPanel;
         private DataGridView variablesGridView;
         private Button addVariable;
+        private Button removeVariable;
+        private TaskHost m_dtrTaskHost;
+        private IDTSTaskUIHost m_treeHost;
         private DataGridViewComboBoxColumn VariableName;
         private DataGridViewTextBoxColumn ColumnFill;
-        private Button removeVariable;
+        private IList<string> m_variables;
+
+        private TaskHost DtrTaskHost => m_dtrTaskHost;
 
         public VariablesView()
         {
@@ -27,15 +35,15 @@ namespace LogVariableTaskUI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.variablesGridviewTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.addremovebuttonTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.variablesGridView = new System.Windows.Forms.DataGridView();
-            this.addVariable = new System.Windows.Forms.Button();
+            this.addremovebuttonTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.removeVariable = new System.Windows.Forms.Button();
+            this.addVariable = new System.Windows.Forms.Button();
             this.VariableName = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.ColumnFill = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.variablesGridviewTableLayoutPanel.SuspendLayout();
-            this.addremovebuttonTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.variablesGridView)).BeginInit();
+            this.addremovebuttonTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // variablesGridviewTableLayoutPanel
@@ -51,22 +59,6 @@ namespace LogVariableTaskUI
             this.variablesGridviewTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 419F));
             this.variablesGridviewTableLayoutPanel.Size = new System.Drawing.Size(471, 419);
             this.variablesGridviewTableLayoutPanel.TabIndex = 0;
-            // 
-            // addremovebuttonTableLayoutPanel
-            // 
-            this.addremovebuttonTableLayoutPanel.AutoSize = true;
-            this.addremovebuttonTableLayoutPanel.ColumnCount = 2;
-            this.addremovebuttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.93976F));
-            this.addremovebuttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.06024F));
-            this.addremovebuttonTableLayoutPanel.Controls.Add(this.removeVariable, 1, 0);
-            this.addremovebuttonTableLayoutPanel.Controls.Add(this.addVariable, 0, 0);
-            this.addremovebuttonTableLayoutPanel.Location = new System.Drawing.Point(142, 448);
-            this.addremovebuttonTableLayoutPanel.Name = "addremovebuttonTableLayoutPanel";
-            this.addremovebuttonTableLayoutPanel.RowCount = 1;
-            this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
-            this.addremovebuttonTableLayoutPanel.Size = new System.Drawing.Size(332, 41);
-            this.addremovebuttonTableLayoutPanel.TabIndex = 1;
             // 
             // variablesGridView
             // 
@@ -115,16 +107,21 @@ namespace LogVariableTaskUI
             this.variablesGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.variablesGridView_EditingControlShowing);
             this.variablesGridView.SelectionChanged += new System.EventHandler(this.variablesGridView_SelectionChanged);
             // 
-            // addVariable
+            // addremovebuttonTableLayoutPanel
             // 
-            this.addVariable.AutoSize = true;
-            this.addVariable.Location = new System.Drawing.Point(3, 3);
-            this.addVariable.Name = "addVariable";
-            this.addVariable.Size = new System.Drawing.Size(110, 30);
-            this.addVariable.TabIndex = 5;
-            this.addVariable.Text = "Add Variable";
-            this.addVariable.UseVisualStyleBackColor = true;
-            this.addVariable.Click += new System.EventHandler(this.addVariable_Click);
+            this.addremovebuttonTableLayoutPanel.AutoSize = true;
+            this.addremovebuttonTableLayoutPanel.ColumnCount = 2;
+            this.addremovebuttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.93976F));
+            this.addremovebuttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.06024F));
+            this.addremovebuttonTableLayoutPanel.Controls.Add(this.removeVariable, 1, 0);
+            this.addremovebuttonTableLayoutPanel.Controls.Add(this.addVariable, 0, 0);
+            this.addremovebuttonTableLayoutPanel.Location = new System.Drawing.Point(142, 448);
+            this.addremovebuttonTableLayoutPanel.Name = "addremovebuttonTableLayoutPanel";
+            this.addremovebuttonTableLayoutPanel.RowCount = 1;
+            this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            this.addremovebuttonTableLayoutPanel.Size = new System.Drawing.Size(332, 41);
+            this.addremovebuttonTableLayoutPanel.TabIndex = 1;
             // 
             // removeVariable
             // 
@@ -137,29 +134,39 @@ namespace LogVariableTaskUI
             this.removeVariable.UseVisualStyleBackColor = true;
             this.removeVariable.Click += new System.EventHandler(this.removeVariable_Click);
             // 
+            // addVariable
+            // 
+            this.addVariable.AutoSize = true;
+            this.addVariable.Location = new System.Drawing.Point(3, 3);
+            this.addVariable.Name = "addVariable";
+            this.addVariable.Size = new System.Drawing.Size(110, 30);
+            this.addVariable.TabIndex = 5;
+            this.addVariable.Text = "Add Variable";
+            this.addVariable.UseVisualStyleBackColor = true;
+            this.addVariable.Click += new System.EventHandler(this.addVariable_Click);
+            // 
             // VariableName
             // 
+            this.VariableName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.VariableName.DataPropertyName = "VariableName";
+            this.VariableName.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.VariableName.DropDownWidth = 160;
+            this.VariableName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.VariableName.HeaderText = "Variable";
+            this.VariableName.MaxDropDownItems = 5;
             this.VariableName.MinimumWidth = 8;
             this.VariableName.Name = "VariableName";
-            ((DataGridViewColumn)VariableName).AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            ((DataGridViewColumn)VariableName).DataPropertyName = "VariableName";
-            VariableName.DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox;
-            VariableName.DropDownWidth = 160;
-            VariableName.FlatStyle = FlatStyle.Flat;
-            VariableName.MaxDropDownItems = 5;            
-            ((DataGridViewBand)VariableName).Resizable = DataGridViewTriState.True;
-            VariableName.Sorted = true;
-            //((DataGridViewColumn)VariableName).Width = (int)(160f * 20f);
-
+            this.VariableName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.VariableName.Sorted = true;
+            this.VariableName.Width = 300;
             // 
             // ColumnFill
             // 
+            this.ColumnFill.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ColumnFill.HeaderText = "";
             this.ColumnFill.MinimumWidth = 8;
             this.ColumnFill.Name = "ColumnFill";
             this.ColumnFill.ReadOnly = true;
-            ((DataGridViewColumn)ColumnFill).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             // 
             // VariablesView
             // 
@@ -170,9 +177,9 @@ namespace LogVariableTaskUI
             this.Name = "VariablesView";
             this.Size = new System.Drawing.Size(951, 595);
             this.variablesGridviewTableLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.variablesGridView)).EndInit();
             this.addremovebuttonTableLayoutPanel.ResumeLayout(false);
             this.addremovebuttonTableLayoutPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.variablesGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,12 +187,47 @@ namespace LogVariableTaskUI
 
         public void OnCommit(object taskHost)
         {
-             
+            m_variablesSelectedDataList.CommitList();
+            logVariableTask.VariablesList = m_variablesSelectedDataList.ToList();
         }
-
+        private VariablesSelectedDataList m_variablesSelectedDataList;
+        LogVariableTask.LogVariableTask logVariableTask;
         public void OnInitialize(IDTSTaskUIHost treeHost, TreeNode viewNode, object taskHost, object connections)
         {
-     
+            if (taskHost == null)
+            {
+                throw new ArgumentNullException("LogVariableTask is NULL.");
+            }
+
+            m_dtrTaskHost = (TaskHost)((taskHost is TaskHost) ? taskHost : null);
+            if ((DtsObject)(object)m_dtrTaskHost == (DtsObject)null || !(m_dtrTaskHost.InnerObject is LogVariableTask.LogVariableTask))
+            {
+                throw new ArgumentException("Taskhost object is not a LogVariableTask.");
+            }
+            logVariableTask = (LogVariableTask.LogVariableTask)m_dtrTaskHost.InnerObject;
+            m_variables = logVariableTask.VariablesList;
+            m_variablesSelectedDataList = new VariablesSelectedDataList(m_variables);
+            m_variablesSelectedDataList.InitList();            
+            PopulateVariables();
+            variablesGridView.DataSource = m_variablesSelectedDataList;
+        }
+
+        private void PopulateVariables()
+        {
+            VariableEnumerator enumerator = ((DtsContainer)m_dtrTaskHost).Variables.GetEnumerator();
+            while (((DtsEnumerator)enumerator).MoveNext())
+            {
+                string qualifiedName = enumerator.Current.QualifiedName;
+                if (!VariableName.Items.Contains((object)qualifiedName))
+                {
+                    VariableName.Items.Add((object)qualifiedName);
+                }
+            }
+
+            if (VariableName.Items.Count == 0)
+            {
+                VariableName.Items.Add((object)string.Empty);
+            }
         }
 
         public void OnLoseSelection(ref bool bCanLeaveView, ref string reason)
@@ -205,12 +247,18 @@ namespace LogVariableTaskUI
 
         private void removeVariable_Click(object sender, EventArgs e)
         {
-
+            int index = ((DataGridViewBand)variablesGridView.CurrentRow).Index;
+            m_variablesSelectedDataList.Remove(m_variablesSelectedDataList[index]);
         }
 
         private void addVariable_Click(object sender, EventArgs e)
         {
-
+            int count = VariableName.Items.Count;
+            string bindedVariableName = (string)VariableName.Items[0];            
+            m_variablesSelectedDataList.Add(bindedVariableName);
+            int num = variablesGridView.RowCount - 1;
+            variablesGridView.CurrentCell = variablesGridView[0, num];
+            variablesGridView.BeginEdit(true);
         }
 
         private void variablesGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)

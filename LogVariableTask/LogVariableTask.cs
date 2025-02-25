@@ -21,11 +21,11 @@ namespace LogVariableTask
 
         private readonly string _EventName = "Logging Variable : ";
 
-        private StringCollection m_VariablesList = new StringCollection();
+        private IList<string> m_VariablesList = new List<string>();
         public string TaskName { get; set; }
         public string TaskDescription { get; set; }
 
-        public StringCollection VariablesList
+        public IList<string> VariablesList
         {
             get
             {
