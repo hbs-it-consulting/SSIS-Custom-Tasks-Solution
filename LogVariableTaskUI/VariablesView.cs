@@ -237,12 +237,27 @@ namespace LogVariableTaskUI
 
         public void OnSelection()
         {
-            
+            variablesGridView.ReadOnly = false;
+            ((Control)addVariable).Enabled = true;      
+            CheckRemoveButton();
+            PopulateVariables();
         }
 
         public void OnValidate(ref bool bViewIsValid, ref string reason)
         {
-            
+            foreach (string variable in m_variablesSelectedDataList)
+            {
+                if (variable == null || variable.Trim().Length == 0)
+                {
+                    bViewIsValid = false;
+                    reason = "Variable name is empty!.";
+                }                
+            }
+
+            if (!bViewIsValid)
+            {
+                m_treeHost.SelectView((IDTSTaskUIView)(object)this);
+            }
         }
 
         private void removeVariable_Click(object sender, EventArgs e)
@@ -263,7 +278,18 @@ namespace LogVariableTaskUI
 
         private void variablesGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
+            DataGridViewCell currentCell = variablesGridView.CurrentCell;
+            DataGridViewComboBoxCell val = (DataGridViewComboBoxCell)(object)((currentCell is DataGridViewComboBoxCell) ? currentCell : null);
+            if (val != null && !val.Items.Contains(e.FormattedValue))
+            {
+                val.Items.Add((object)(string)e.FormattedValue);
+                if (variablesGridView.IsCurrentCellDirty)
+                {
+                    variablesGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                }
 
+                ((DataGridViewCell)val).Value = (string)e.FormattedValue;
+            }
         }
 
         private void variablesGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -279,9 +305,22 @@ namespace LogVariableTaskUI
 
         private void variablesGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-
+            if (variablesGridView.IsCurrentCellDirty)
+            {
+                variablesGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
         }
-
+        private void CheckRemoveButton()
+        {
+            if (((BaseCollection)variablesGridView.SelectedRows).Count == 0)
+            {
+                ((Control)removeVariable).Enabled = false;
+            }
+            else
+            {
+                ((Control)removeVariable).Enabled = true;
+            }
+        }
         private void variablesGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
 
@@ -289,12 +328,31 @@ namespace LogVariableTaskUI
 
         private void variablesGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-
+            CheckRemoveButton();
+            int rowCount = variablesGridView.RowCount;
+            for (int i = 0; i < rowCount; i++)
+            {
+                DataGridViewCell obj = variablesGridView["VariableName", i];
+                DataGridViewComboBoxCell val = (DataGridViewComboBoxCell)(object)((obj is DataGridViewComboBoxCell) ? obj : null);
+                string variableName = m_variablesSelectedDataList[i];               
+                if (val != null)
+                {
+                    val.Items.Clear();
+                    val.Items.Add((object)variableName);
+                    foreach (object item in VariableName.Items)
+                    {
+                        if (!val.Items.Contains((object)(string)item))
+                        {
+                            val.Items.Add((object)(string)item);
+                        }
+                    }
+                }                
+            }
         }
 
         private void variablesGridView_SelectionChanged(object sender, EventArgs e)
         {
-
+            CheckRemoveButton();
         }
     }
 }
