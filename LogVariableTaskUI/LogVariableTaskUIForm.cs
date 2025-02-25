@@ -17,10 +17,10 @@ namespace LogVariableTaskUI
         {
             // Add General view
             GeneralView generalView = new GeneralView();
-            this.DTSTaskUIHost.AddView("General", generalView, null);/*
-            // Add Settings view
-            SettingsView settingsView = new SettingsView();
-            this.DTSTaskUIHost.AddView("Settings", settingsView, null);*/
+            this.DTSTaskUIHost.AddView("General", generalView, null);
+            // Add Variables view
+            VariablesView variablesView = new VariablesView();
+            this.DTSTaskUIHost.AddView("Variables", variablesView, null);
         }
     }
 }

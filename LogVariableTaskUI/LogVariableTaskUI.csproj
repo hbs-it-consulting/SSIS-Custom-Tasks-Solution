@@ -63,12 +63,20 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VariablesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LogVariableTask\LogVariableTask.csproj">
       <Project>{c1c5ada1-17ac-4906-a140-bd2eefe1a6f0}</Project>
       <Name>LogVariableTask</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="VariablesView.resx">
+      <DependentUpon>VariablesView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
