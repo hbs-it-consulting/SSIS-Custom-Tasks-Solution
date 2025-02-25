@@ -24,6 +24,8 @@ namespace LogVariableTaskUI
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.variablesGridviewTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.addremovebuttonTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.variablesGridView = new System.Windows.Forms.DataGridView();
@@ -46,7 +48,7 @@ namespace LogVariableTaskUI
             this.variablesGridviewTableLayoutPanel.Name = "variablesGridviewTableLayoutPanel";
             this.variablesGridviewTableLayoutPanel.RowCount = 1;
             this.variablesGridviewTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.variablesGridviewTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.variablesGridviewTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 419F));
             this.variablesGridviewTableLayoutPanel.Size = new System.Drawing.Size(471, 419);
             this.variablesGridviewTableLayoutPanel.TabIndex = 0;
             // 
@@ -62,7 +64,7 @@ namespace LogVariableTaskUI
             this.addremovebuttonTableLayoutPanel.Name = "addremovebuttonTableLayoutPanel";
             this.addremovebuttonTableLayoutPanel.RowCount = 1;
             this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.addremovebuttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.addremovebuttonTableLayoutPanel.Size = new System.Drawing.Size(332, 41);
             this.addremovebuttonTableLayoutPanel.TabIndex = 1;
             // 
@@ -70,14 +72,38 @@ namespace LogVariableTaskUI
             // 
             this.variablesGridView.AllowUserToAddRows = false;
             this.variablesGridView.AllowUserToDeleteRows = false;
+            this.variablesGridView.AllowUserToResizeColumns = false;
+            this.variablesGridView.AllowUserToResizeRows = false;
+            this.variablesGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.variablesGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.variablesGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.variablesGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.variablesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.variablesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.variablesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.VariableName,
             this.ColumnFill});
+            this.variablesGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.variablesGridView.Location = new System.Drawing.Point(3, 3);
+            this.variablesGridView.MultiSelect = false;
             this.variablesGridView.Name = "variablesGridView";
             this.variablesGridView.RowHeadersVisible = false;
             this.variablesGridView.RowHeadersWidth = 62;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.variablesGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.variablesGridView.RowTemplate.Height = 28;
             this.variablesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.variablesGridView.Size = new System.Drawing.Size(465, 413);
@@ -116,7 +142,16 @@ namespace LogVariableTaskUI
             this.VariableName.HeaderText = "Variable";
             this.VariableName.MinimumWidth = 8;
             this.VariableName.Name = "VariableName";
-            this.VariableName.Width = 150;
+            ((DataGridViewColumn)VariableName).AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ((DataGridViewColumn)VariableName).DataPropertyName = "VariableName";
+            VariableName.DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox;
+            VariableName.DropDownWidth = 160;
+            VariableName.FlatStyle = FlatStyle.Flat;
+            VariableName.MaxDropDownItems = 5;            
+            ((DataGridViewBand)VariableName).Resizable = DataGridViewTriState.True;
+            VariableName.Sorted = true;
+            //((DataGridViewColumn)VariableName).Width = (int)(160f * 20f);
+
             // 
             // ColumnFill
             // 
@@ -124,10 +159,12 @@ namespace LogVariableTaskUI
             this.ColumnFill.MinimumWidth = 8;
             this.ColumnFill.Name = "ColumnFill";
             this.ColumnFill.ReadOnly = true;
-            this.ColumnFill.Width = 150;
+            ((DataGridViewColumn)ColumnFill).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             // 
             // VariablesView
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.addremovebuttonTableLayoutPanel);
             this.Controls.Add(this.variablesGridviewTableLayoutPanel);
             this.Name = "VariablesView";
