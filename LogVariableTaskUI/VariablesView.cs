@@ -64,7 +64,8 @@ namespace LogVariableTaskUI
             // 
             this.variablesGridView.AllowUserToAddRows = false;
             this.variablesGridView.AllowUserToDeleteRows = false;
-            this.variablesGridView.AllowUserToResizeColumns = false;
+            this.variablesGridView.AllowUserToResizeColumns = true;
+            this.variablesGridView.AutoGenerateColumns = false;
             this.variablesGridView.AllowUserToResizeRows = false;
             this.variablesGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.variablesGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -86,6 +87,7 @@ namespace LogVariableTaskUI
             this.variablesGridView.Location = new System.Drawing.Point(3, 3);
             this.variablesGridView.MultiSelect = false;
             this.variablesGridView.Name = "variablesGridView";
+            this.variablesGridView.ReadOnly = true;
             this.variablesGridView.RowHeadersVisible = false;
             this.variablesGridView.RowHeadersWidth = 62;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -156,6 +158,7 @@ namespace LogVariableTaskUI
             this.VariableName.MaxDropDownItems = 5;
             this.VariableName.MinimumWidth = 8;
             this.VariableName.Name = "VariableName";
+            this.VariableName.ReadOnly = true;
             this.VariableName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.VariableName.Sorted = true;
             this.VariableName.Width = 300;
