@@ -268,7 +268,13 @@ namespace LogVariableTaskUI
 
         private void variablesGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-
+            if (((object)e.Control).GetType() == typeof(DataGridViewComboBoxEditingControl))
+            {
+                ComboBox val = (ComboBox)e.Control;
+                val.DropDownStyle = (ComboBoxStyle)1;
+                val.MaxDropDownItems = 8;
+                val.DropDownHeight = val.ItemHeight * val.MaxDropDownItems;
+            }
         }
 
         private void variablesGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
