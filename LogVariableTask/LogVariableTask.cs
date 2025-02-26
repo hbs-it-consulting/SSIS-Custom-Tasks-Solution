@@ -10,7 +10,7 @@ namespace LogVariableTask
 {
     [DtsTask(
         TaskType = "DTS140"
-      , DisplayName = "NBK - Log Variable Task"
+      , DisplayName = "Log Variable Task"
       , IconResource = "LogVariableTask.LogVariableTaskICON.ico"
       , Description = "This task logs an SSIS package variable in an SSIS execution log."
       , UITypeName = "LogVariableTaskUI.LogVariableTaskUI, LogVariableTaskUI, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=5f4e01d31643cbb4"
