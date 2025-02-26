@@ -226,11 +226,11 @@ namespace LogVariableTaskUI
                     VariableName.Items.Add((object)qualifiedName);
                 }
             }
-
+            /*
             if (VariableName.Items.Count == 0)
             {
                 VariableName.Items.Add((object)string.Empty);
-            }
+            }*/
         }
 
         public void OnLoseSelection(ref bool bCanLeaveView, ref string reason)
@@ -266,6 +266,11 @@ namespace LogVariableTaskUI
         private void removeVariable_Click(object sender, EventArgs e)
         {
             int index = ((DataGridViewBand)variablesGridView.CurrentRow).Index;
+
+
+            MessageBox.Show(m_variablesSelectedDataList[index]);
+
+
             m_variablesSelectedDataList.Remove(m_variablesSelectedDataList[index]);
         }
 
